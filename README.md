@@ -1,6 +1,6 @@
 # STM32F446 Bootloader
 
-This repository contains a custom bootloader for the STM32F446 microcontroller (Cortex-M4), designed to support In-Application Programming (IAP) with dual-slot firmware architecture. It enables safe firmware updates over UART and ensures robust fallback mechanisms in case of corruption or failure.
+This repository contains a custom bootloader for the STM32F446 microcontroller (Cortex-M4), designed to support In-Application Programming (IAP) with a dual-slot firmware architecture. It enables safe firmware updates over UART and ensures robust fallback mechanisms in case of corruption or failure.
 
 ## 🚀 Features
 
@@ -10,6 +10,7 @@ This repository contains a custom bootloader for the STM32F446 microcontroller (
 - UART-based firmware update interface
 - Vector table relocation and SCB->VTOR setup
 - STM32CubeIDE project structure with LL drivers
+- Compatible with Python CLI and GUI uploader tools
 
 ## 📁 Project Structure
 
@@ -47,10 +48,12 @@ This repository contains a custom bootloader for the STM32F446 microcontroller (
 
 ## 🔗 Linked Repositories
 
-This bootloader is designed to work with the following application slots:
+This bootloader is designed to work with the following application and support modules:
 
 - [STM32F446-APP1](https://github.com/Vojtese/STM32F446-APP1): Primary application slot
 - [STM32F446-APP2](https://github.com/Vojtese/STM32F446-APP2): Secondary/fallback application slot
+- [STM32F446-SensorTestAndHW](https://github.com/Vojtese/STM32F446-SensorTestAndHW): Sensor and hardware interface testing
+- [serial_BIN_file_transfer](https://github.com/Vojtese/serial_BIN_file_transfer): Python GUI tool for uploading firmware over UART
 
 ## 🧪 How to Use
 
@@ -58,7 +61,7 @@ This bootloader is designed to work with the following application slots:
    Use STM32CubeProgrammer or JTAG/SWD to flash `bootloader.bin` to the MCU.
 
 2. **Upload firmware via UART**  
-   Use a Python CLI tool or custom uploader to send a compiled `.bin` firmware image over UART.
+   Use the Python GUI tool or CLI uploader to send a compiled `.bin` firmware image over UART.
 
 3. **Bootloader verifies and writes firmware**  
    The bootloader checks CRC integrity and writes the firmware to either App1 or App2 slot.
@@ -72,14 +75,14 @@ This bootloader is designed to work with the following application slots:
 - STM32CubeMX
 - STM32CubeProgrammer
 - JTAG/SWD debugger
-- Python (for CLI uploader)
+- Python CLI and GUI uploader
 
 ## ⚠️ Known Issues / TODO
 
-- Add GUI interface for firmware upload
+- Add GUI interface enhancements (progress bar, error logs)
 - Improve error handling and fallback logic
 - Document memory map and slot layout
 
 ## 📜 License
 
-This project is licensed under GNU GENERAL PUBLIC LICENSE
+This project is licensed under the GNU General Public License v3.0.
