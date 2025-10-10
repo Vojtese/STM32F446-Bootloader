@@ -82,4 +82,4 @@ This bootloader is designed to work with the following application slots:
 
 ## 📜 License
 
-This project is licensed under the Public GPT License.
+This project is licensed under GNU GENERAL PUBLIC LICENSE
