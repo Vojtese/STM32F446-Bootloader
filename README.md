@@ -43,3 +43,43 @@ This repository contains a custom bootloader for the STM32F446 microcontroller (
 +------------------+
 | Application Runs |
 +------------------+
+```
+
+## 🔗 Linked Repositories
+
+This bootloader is designed to work with the following application slots:
+
+- [STM32F446-APP1](https://github.com/Vojtese/STM32F446-APP1): Primary application slot
+- [STM32F446-APP2](https://github.com/Vojtese/STM32F446-APP2): Secondary/fallback application slot
+
+## 🧪 How to Use
+
+1. **Flash the bootloader**  
+   Use STM32CubeProgrammer or JTAG/SWD to flash `bootloader.bin` to the MCU.
+
+2. **Upload firmware via UART**  
+   Use a Python CLI tool or custom uploader to send a compiled `.bin` firmware image over UART.
+
+3. **Bootloader verifies and writes firmware**  
+   The bootloader checks CRC integrity and writes the firmware to either App1 or App2 slot.
+
+4. **Automatic jump to valid application**  
+   On next reset, the bootloader checks both slots and jumps to the valid application.
+
+## 🛠️ Tools Used
+
+- STM32CubeIDE
+- STM32CubeMX
+- STM32CubeProgrammer
+- JTAG/SWD debugger
+- Python (for CLI uploader)
+
+## ⚠️ Known Issues / TODO
+
+- Add GUI interface for firmware upload
+- Improve error handling and fallback logic
+- Document memory map and slot layout
+
+## 📜 License
+
+This project is licensed under the Public GPT License.
