@@ -71,7 +71,7 @@ The bootloader is part of a complete embedded system for rainwater diagnostics. 
 
 ![Top View](docs/img/top.jpg)
 
-![Bottom View](docs/img/bottom.jpg)
+![Bottom View](docs/img/Bottom.jpg)
 
 ---
 
