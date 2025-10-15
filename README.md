@@ -53,7 +53,7 @@ It is a core component of a distributed embedded system designed for diagnostics
 
 The bootloader supports dual-slot firmware management with CRC validation and UART/RS485-based in-application programming. It verifies the integrity of App1 and App2 and jumps accordingly.
 
-![Bootloader Flow](docs/SWdesignv2.png)
+![Bootloader Flow](docs/SWdesignv2.pdf)
 
 ---
 
@@ -61,7 +61,7 @@ The bootloader supports dual-slot firmware management with CRC validation and UA
 
 In this version, the application itself can receive and flash new firmware using DMA and UART/RS485, without rebooting into the bootloader. This is ideal for remote updates in distributed systems.
 
-![APP IAP Flow](docs/SWdesignv1.png)
+![APP IAP Flow](docs/SWdesignv1.pdf)
 
 ---
 
