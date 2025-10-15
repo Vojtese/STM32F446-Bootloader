@@ -27,7 +27,7 @@ It is a core component of a distributed embedded system designed for diagnostics
 - Receives `.bin` firmware files over UART or RS485
 - Parses 240-byte packets with headers and CRC
 - Writes to Flash using `LL_FLASH_Program()` and verifies each block
-- Compatible with [serial_BIN_file_transfer](https://github.com/Vojtese/serial_BIN_file_transfer) GUI
+- Compatible with GUI uploader and RS485 upload test firmware
 
 ### 🧱 CMSIS LL Driver Integration
 - LL_USART for UART/RS485 communication
@@ -37,24 +37,41 @@ It is a core component of a distributed embedded system designed for diagnostics
 
 ---
 
-## 🧠 Memory Layout
+## 📁 Project Structure
 
-| Region        | Address Range       | Purpose              |
-|---------------|---------------------|----------------------|
-| Bootloader    | 0x08000000–0x08007FFF | 32 KB bootloader     |
-| App1          | 0x08008000–0x0803FFFF | Primary application  |
-| App2          | 0x08040000–0x0807FFFF | Fallback application |
-
-Custom linker scripts are used for each region to ensure proper placement and isolation.
+- `Core/` – Bootloader source code
+- `Drivers/` – STM32 LL drivers
+- `.ioc` – STM32CubeMX configuration
+- `STM32F446RETX_FLASH.ld` – Custom linker script for bootloader region
+- `docs/` – Diagrams and hardware images
 
 ---
 
-## 📁 Project Structure
+## 📊 Firmware Architecture
 
-- `Core/`: Bootloader source code
-- `Drivers/`: STM32 LL drivers
-- `.ioc`: STM32CubeMX configuration
-- `STM32F446RETX_FLASH.ld`: Custom linker script for bootloader region
+### 🧭 Bootloader Flow
+
+The bootloader supports dual-slot firmware management with CRC validation and UART/RS485-based in-application programming. It verifies the integrity of App1 and App2 and jumps accordingly.
+
+![Bootloader Flow](docs/SWdesignv2.png)
+
+---
+
+### 🧠 Application Flow with IAP (APP1/APP2)
+
+In this version, the application itself can receive and flash new firmware using DMA and UART/RS485, without rebooting into the bootloader. This is ideal for remote updates in distributed systems.
+
+![APP IAP Flow](docs/SWdesignv1.png)
+
+---
+
+## 🧪 Electronics Overview
+
+The bootloader is part of a complete embedded system for rainwater diagnostics. Below are top and bottom views of the final PCB design.
+
+![Top View](docs/top.png)
+
+![Bottom View](docs/bottom.png)
 
 ---
 
@@ -68,53 +85,42 @@ Custom linker scripts are used for each region to ensure proper placement and is
 
 ---
 
-## 🧪 Testing and Validation
-
-- Verified UART and RS485 firmware upload using GUI and terminal
-- CRC validation tested with corrupted and valid firmware images
-- Bootloader fallback tested by erasing App1 and confirming App2 execution
-- Flash write/verify tested with oscilloscope and debug logs
-
----
-
 ## 🛠️ TODO & Improvements
 
-This section outlines planned enhancements and refinements for the bootloader based on the development experience, thesis goals, and integration feedback.
-
-### 🔄 1. RS485 Upload Integration
+### RS485 Upload Integration
 - [ ] Finalize RS485 support for firmware upload using DMA and direction control
-- [ ] Implement automatic baud rate detection for RS485
-- [ ] Add timeout and retry logic for noisy environments
+- [ ] Implement automatic baud rate detection
+- [ ] Add timeout and retry logic
 
-### 🧠 2. Boot Decision Logic
+### Boot Decision Logic
 - [ ] Add boot pin override to force fallback or stay in bootloader
-- [ ] Implement watchdog-based recovery if application hangs after jump
-- [ ] Log boot decisions and CRC results via UART for diagnostics
+- [ ] Implement watchdog-based recovery
+- [ ] Log boot decisions via UART
 
-### 🧪 3. Flash Write Robustness
-- [ ] Add double-buffering for packet reception to avoid timing issues
-- [ ] Verify Flash erase/write success with read-back and CRC
-- [ ] Add support for partial firmware updates (sector-level targeting)
+### Flash Write Robustness
+- [ ] Add double-buffering for packet reception
+- [ ] Verify Flash erase/write success with read-back
+- [ ] Support partial firmware updates
 
-### 🧰 4. Protocol Enhancements
-- [ ] Extend packet format to include versioning and metadata
-- [ ] Add acknowledgment and error codes for GUI feedback
-- [ ] Support encrypted or signed firmware packets (future-proofing)
+### Protocol Enhancements
+- [ ] Extend packet format with versioning and metadata
+- [ ] Add acknowledgment and error codes
+- [ ] Support encrypted or signed firmware packets
 
-### 📊 5. Debug and Diagnostics
-- [ ] Add LED blink patterns for bootloader status (e.g. CRC fail, waiting for upload)
-- [ ] Add UART debug output for packet parsing and Flash status
-- [ ] Integrate with CLI from SensorTest project for manual control
+### Debug and Diagnostics
+- [ ] Add LED blink patterns for bootloader status
+- [ ] Add UART debug output
+- [ ] Integrate CLI from SensorTest project
 
-### 🧩 6. Memory and Linker Improvements
-- [ ] Add linker script validation to prevent overlap between bootloader and apps
-- [ ] Reserve space for bootloader configuration and persistent flags
-- [ ] Document memory map in README and code comments
+### Memory and Linker Improvements
+- [ ] Validate linker script boundaries
+- [ ] Reserve space for persistent bootloader flags
+- [ ] Document memory map in code and README
 
-### 📦 7. Packaging and Deployment
-- [ ] Add script to generate `.bin` with appended CRC automatically
-- [ ] Add GUI-side support for selecting App1 vs App2 target
-- [ ] Create unified flashing tool for UART and RS485 modes
+### Packaging and Deployment
+- [ ] Add script to generate `.bin` with CRC
+- [ ] Add GUI-side support for selecting App1 vs App2
+- [ ] Create unified flashing tool for UART and RS485
 
 ---
 
