@@ -77,6 +77,47 @@ Custom linker scripts are used for each region to ensure proper placement and is
 
 ---
 
+## 🛠️ TODO & Improvements
+
+This section outlines planned enhancements and refinements for the bootloader based on the development experience, thesis goals, and integration feedback.
+
+### 🔄 1. RS485 Upload Integration
+- [ ] Finalize RS485 support for firmware upload using DMA and direction control
+- [ ] Implement automatic baud rate detection for RS485
+- [ ] Add timeout and retry logic for noisy environments
+
+### 🧠 2. Boot Decision Logic
+- [ ] Add boot pin override to force fallback or stay in bootloader
+- [ ] Implement watchdog-based recovery if application hangs after jump
+- [ ] Log boot decisions and CRC results via UART for diagnostics
+
+### 🧪 3. Flash Write Robustness
+- [ ] Add double-buffering for packet reception to avoid timing issues
+- [ ] Verify Flash erase/write success with read-back and CRC
+- [ ] Add support for partial firmware updates (sector-level targeting)
+
+### 🧰 4. Protocol Enhancements
+- [ ] Extend packet format to include versioning and metadata
+- [ ] Add acknowledgment and error codes for GUI feedback
+- [ ] Support encrypted or signed firmware packets (future-proofing)
+
+### 📊 5. Debug and Diagnostics
+- [ ] Add LED blink patterns for bootloader status (e.g. CRC fail, waiting for upload)
+- [ ] Add UART debug output for packet parsing and Flash status
+- [ ] Integrate with CLI from SensorTest project for manual control
+
+### 🧩 6. Memory and Linker Improvements
+- [ ] Add linker script validation to prevent overlap between bootloader and apps
+- [ ] Reserve space for bootloader configuration and persistent flags
+- [ ] Document memory map in README and code comments
+
+### 📦 7. Packaging and Deployment
+- [ ] Add script to generate `.bin` with appended CRC automatically
+- [ ] Add GUI-side support for selecting App1 vs App2 target
+- [ ] Create unified flashing tool for UART and RS485 modes
+
+---
+
 ## 📜 License
 
 This project is licensed under the GNU General Public License v3.0.
