@@ -69,9 +69,9 @@ In this version, the application itself can receive and flash new firmware using
 
 The bootloader is part of a complete embedded system for rainwater diagnostics. Below are top and bottom views of the final PCB design.
 
-![Top View](docs/top.png)
+![Top View](docs/top.jpg)
 
-![Bottom View](docs/bottom.png)
+![Bottom View](docs/bottom.jpg)
 
 ---
 
